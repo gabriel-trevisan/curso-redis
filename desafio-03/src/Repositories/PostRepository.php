@@ -72,4 +72,16 @@ class PostRepository
 
         $this->redis->del('post:'. $id);
     }
+
+    public function list()
+    {
+        $ids = $this->redis->lrange('posts', 0, -1);
+        $posts = [];
+
+        foreach ($ids as $id) {
+            array_push($posts, $this->redis->hgetall('post:' . $id));
+        }
+
+        return $posts;
+    }
 }
