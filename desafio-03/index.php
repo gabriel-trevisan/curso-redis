@@ -22,6 +22,7 @@ $postRepo->save($post1);
 $postRepo->save($post2);
 
 $postRepo->update(1, $post3);
+$postRepo->delete($post2);
 
 // Buscando dados do Redis
 // $tags = $tagRepo->getAll();

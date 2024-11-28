@@ -58,4 +58,18 @@ class PostRepository
     {
         return $this->redis->hgetall('post:' . $post->getId());
     }
+
+    public function delete(Post $post)
+    {
+        $id = $post->getId();
+
+        $this->redis->lrem('posts', 0, $id);
+
+        $tags = $this->redis->smembers('tags:'. $id);
+        foreach ($tags as $tag) {
+            $this->redis->srem('tags:' . $id, $tag);
+        }
+
+        $this->redis->del('post:'. $id);
+    }
 }
