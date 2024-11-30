@@ -1,0 +1,48 @@
+1. Aviões:
+    - Cada avião tem um identificador único, modelo,
+    capacidade de passageiros e ano de fabricação.
+    - Cada avião é operado por uma companhia aérea
+    específica.
+
+
+HSET plane:1 model 'Z4000' capacity 300 year 2023 company_id 101
+HSET plane:2 model 'Z5000' capacity 350 year 2024 company_id 101
+
+HSET company:101 name 'FlightTracker'
+
+2. Pilotos:
+    - Cada piloto tem um identificador único, nome, 
+    idade e licença.
+    - Cada piloto pode operar múltiplos aviões, mas cada
+    avião tem apenas um piloto responsável por vez.
+
+HSET pilot:1 name 'José Maria' age 38 license 'A-15785'
+
+SADD pilot:1:planes 1
+SADD pilot:1:planes 2
+
+3. Voos:
+    - Cada voo tem um identificador único, número do voo,
+    data e hora de partida, e origem e destino.
+    - Um voo é realizado por um avião específico e um
+    piloto específico.
+    - Um avião pode realizar múltiplos voos, e um piloto
+    pode pilotar múltiplos voos.
+
+HSET flight:1 number 001 date_and_hour '2024-11-30: 20:00:00' origin 'Campinas' destination 'Bahia'
+HSET flight:2 number 002 date_and_hour '2024-11-31: 20:00:00' origin 'Bahia' destination 'Campinas'
+
+SADD plane:1:flights 1 2
+SADD pilot:1:flights 1 2
+
+Modelagem
+    1. Relacionamento 1:1
+    - Cada avião é operado por uma companhia aérea específica.
+
+    2. Relacionamento 1:N
+    - Um piloto pode operar múltiplos aviões.
+
+    3. Relacionamento N:N
+    - Um voo é realizado por um avião e um piloto
+    específicos, e ambos podem estar envolvidos em
+    múltiplos voos.
